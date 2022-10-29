@@ -5,6 +5,11 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useEffect } from 'react';
 
+import PrivateRoute from './authentication/PrivateRoute';
+import { privateRoutes } from './routes/privateRoutes';
+import AdminRoute from './authentication/AdminRoute';
+import Dashboard from './pages/Dashboard/Dashboard';
+
 
 
 function App() {
@@ -24,6 +29,19 @@ function App() {
         {publicRoute.map(({ path, Component }, index) => (
           <Route key={index} path={path} element={<Component />} />
         ))}
+        {/* <Route path='/services' element={<PrivateRoute><Services /></PrivateRoute>} />
+        <Route path='/about' element={<PrivateRoute><About /></PrivateRoute>} /> */}
+
+        <Route element={<PrivateRoute />} >
+          {privateRoutes.map(({ path, Component }, index) => (
+            <Route key={index} path={path} element={<Component />} />
+          ))}
+        </Route>
+
+        <Route element={<AdminRoute />} >
+          <Route path='/dashboard' element={<Dashboard />} />
+        </Route>
+
       </Routes>
     </Navbar>
 
